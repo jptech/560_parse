@@ -30,32 +30,15 @@ public:
         while(std::getline(file, word_line))
         {
             std::string word;
-            std::string word_data;
+            std::string fname;
+            int location;
             std::istringstream iss(word_line);
 
-            iss >> word;
+            iss >> word >> fname >> location;
 
-            while(std::getline(iss, word_data, ';'))
-            {
-                int colon = word_data.find(':');
-                std::string s_loc;
-                std::istringstream lss;
-                std::vector<int> locations;
+            fname = fname.substr(fname.find_last_of('/')+1);
 
-                int start = word_data.find_first_not_of(" ");
-                std::string fname = word_data.substr(start, colon-start);
-                std::istringstream locs(word_data.substr(colon+1));
-
-                while(std::getline(locs, s_loc, ','))
-                {
-                    int loc;
-                    lss.str(s_loc);
-                    if(lss >> loc) locations.push_back(loc);
-                    lss.clear();
-                }
-
-                m_index[word][fname] = locations;
-            }
+            m_index[word][fname].push_back(location);
         }
 
         return true;
