@@ -4,10 +4,9 @@
 #include <vector>
 #include <string>
 #include <map>
-#include <set>
-#include <memory>
 #include <unordered_map>
 #include <exception>
+#include <algorithm>
 
 class QueryEngine
 {
@@ -67,6 +66,9 @@ public:
             std::cout << "Please enter your word query (q to quit): ";
             std::cin >> str;
 
+            // convert to lower case
+            std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+
             // if the query is not a stop query, evaluate it and return the results
             if(str != "q")
             {
@@ -80,8 +82,11 @@ public:
                         std::cout << "File: " << f.first << std::endl;
                         std::cout << "\t";
 
+                        std::vector<int> locations = f.second;
+                        std::sort(locations.begin(), locations.end());
+
                         // loop through each location of the word within the file
-                        for(auto &loc : f.second)
+                        for(auto &loc : locations)
                         {
                             std::cout << loc << " ";
                         }
