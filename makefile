@@ -1,5 +1,5 @@
-$CXX ?= g++
-$CXXFLAGS ?= -O3 -g --std=c++11
+CXX ?= g++
+CXXFLAGS = -O3 -g -std=c++11
 
 all: query
 
